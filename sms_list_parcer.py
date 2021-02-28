@@ -44,7 +44,6 @@ lines = tn.read_until(
   .split("\n")
 
 def string_to_record(line):
-  # field_off_sets = [0, 5, 14, 30, 56]
   field_name_offsets_map = { 0:"Index",
                             5:"SimIndex",
                             14:"PhoneNumber",
@@ -70,7 +69,6 @@ def set_date(rec):
   # Sat Feb 27 22:17:10 2021
   rec["Date"] = datetime.datetime.strptime(rec["Date"], '%a %b %d %H:%M:%S %Y')
   return rec;
-
 
 recs = filter(lambda rec: len(rec) != 0, map(string_to_record, lines))
 recs = map(set_date, recs)
