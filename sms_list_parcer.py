@@ -7,7 +7,10 @@ import sys
 import datetime
 import json
 
-with open("sms_config.json") as json_data_file:
+with open("config_path.txt") as file:
+  addpac_cfg_path = data = file.read().replace("\n","")
+
+with open(addpac_cfg_path) as json_data_file:
   addpac_cfg = json.load(json_data_file)['addpac']
 print(addpac_cfg)
 
