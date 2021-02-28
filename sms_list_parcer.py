@@ -8,7 +8,7 @@ import datetime
 import json
 
 with open("config_path.txt") as file:
-  addpac_cfg_path = data = file.read().replace("\n","")
+  addpac_cfg_path = data = file.read()
 
 with open(addpac_cfg_path) as json_data_file:
   addpac_cfg = json.load(json_data_file)['addpac']
