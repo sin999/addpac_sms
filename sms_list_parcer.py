@@ -8,7 +8,7 @@ import datetime
 import json
 
 with open("config_path.txt") as file:
-  addpac_cfg_path = data = file.read()
+  addpac_cfg_path = data = file.read().replace("\n", "")
 
 with open(addpac_cfg_path) as json_data_file:
   addpac_cfg = json.load(json_data_file)['addpac']
@@ -16,8 +16,7 @@ print(addpac_cfg)
 
 sys.stdout = codecs.getwriter("utf-8")(sys.stdout.detach())
 
-
-print('Content-Type: text/html; charset=utf-8'+"\n")
+print('Content-Type: text/html; charset=utf-8' + "\n")
 HOST = addpac_cfg['host']
 PORT = addpac_cfg['port']
 password = bytes(addpac_cfg['password'], 'utf-8')
@@ -46,12 +45,13 @@ lines = tn.read_until(
     "") \
   .split("\n")
 
+
 def string_to_record(line):
-  field_name_offsets_map = { 0:"Index",
-                            5:"SimIndex",
-                            14:"PhoneNumber",
-                            30:"Date",
-                            56:"Message"}
+  field_name_offsets_map = {0: "Index",
+                            5: "SimIndex",
+                            14: "PhoneNumber",
+                            30: "Date",
+                            56: "Message"}
   field_off_sets = list(field_name_offsets_map.keys())
   if len(line) > field_off_sets[len(field_off_sets) - 1]:
     line = line.replace("\r", "")
@@ -72,6 +72,7 @@ def set_date(rec):
   # Sat Feb 27 22:17:10 2021
   rec["Date"] = datetime.datetime.strptime(rec["Date"], '%a %b %d %H:%M:%S %Y')
   return rec;
+
 
 recs = filter(lambda rec: len(rec) != 0, map(string_to_record, lines))
 recs = map(set_date, recs)
